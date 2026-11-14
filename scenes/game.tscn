@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://niha8fcy3q6s"]
+
+[ext_resource type="PackedScene" uid="uid://bwr2uutmv6h3q" path="res://scenes/player.tscn" id="1_yqjtg"]
+[ext_resource type="Script" uid="uid://i66yaw6lkovl" path="res://player.gd" id="2_lnu2h"]
+
+[sub_resource type="TileSet" id="TileSet_46l1j"]
+
+[node name="game" type="Node2D" unique_id=1457006638]
+
+[node name="Player" parent="." unique_id=1218412079 instance=ExtResource("1_yqjtg")]
+position = Vector2(34, -63)
+script = ExtResource("2_lnu2h")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1961053554]
+
+[node name="TileMap" type="TileMap" parent="." unique_id=1818010237]
+tile_set = SubResource("TileSet_46l1j")
+format = 2
