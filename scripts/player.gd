@@ -16,6 +16,27 @@ func _ready() -> void:
 	if not anim.is_playing():
 		anim.play("idle_down")
 
+var max_health = 100
+var health = 100
+var is_dead = false
+
+func take_damage(amount: int):
+	if is_dead:
+		return
+
+	health -= amount
+	health = max(health, 0)
+
+	print("Health:", health)
+
+	if health <= 0:
+		die()
+
+func die():
+	is_dead = true
+	print("Player died!")
+	get_tree().reload_current_scene()
+
 
 func _physics_process(delta: float) -> void:
 	if GameState.is_game_over:
