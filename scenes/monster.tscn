@@ -1,0 +1,93 @@
+[gd_scene load_steps=12 format=3 uid="uid://monster_sonar_01"]
+
+[ext_resource type="Script" path="res://scripts/monster.gd" id="1_monster"]
+[ext_resource type="Texture2D" uid="uid://7huw5yxd0t6w" path="res://assets/monster.png" id="2_monster"]
+
+[sub_resource type="AtlasTexture" id="m0"]
+atlas = ExtResource("2_monster")
+region = Rect2(0, 0, 425, 410)
+
+[sub_resource type="AtlasTexture" id="m1"]
+atlas = ExtResource("2_monster")
+region = Rect2(425, 0, 425, 410)
+
+[sub_resource type="AtlasTexture" id="m2"]
+atlas = ExtResource("2_monster")
+region = Rect2(850, 0, 425, 410)
+
+[sub_resource type="AtlasTexture" id="m3"]
+atlas = ExtResource("2_monster")
+region = Rect2(0, 410, 425, 410)
+
+[sub_resource type="AtlasTexture" id="m4"]
+atlas = ExtResource("2_monster")
+region = Rect2(425, 410, 425, 410)
+
+[sub_resource type="AtlasTexture" id="m5"]
+atlas = ExtResource("2_monster")
+region = Rect2(0, 820, 425, 410)
+
+[sub_resource type="AtlasTexture" id="m6"]
+atlas = ExtResource("2_monster")
+region = Rect2(425, 820, 425, 410)
+
+[sub_resource type="SpriteFrames" id="frames"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("m0")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("m0")
+}, {
+"duration": 1.0,
+"texture": SubResource("m1")
+}, {
+"duration": 1.0,
+"texture": SubResource("m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("m3")
+}, {
+"duration": 1.0,
+"texture": SubResource("m4")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("m5")
+}, {
+"duration": 1.0,
+"texture": SubResource("m6")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="body_shape"]
+radius = 20.0
+
+[node name="Monster" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_monster")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("frames")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("body_shape")

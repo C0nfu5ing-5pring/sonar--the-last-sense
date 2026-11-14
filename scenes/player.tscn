@@ -1,37 +1,139 @@
-[gd_scene format=3 uid="uid://bwr2uutmv6h3q"]
+[gd_scene load_steps=16 format=3 uid="uid://bwr2uutmv6h3q"]
 
-[ext_resource type="Texture2D" uid="uid://vv4wfb3jmi57" path="res://assets/hero.png" id="1_3vyb7"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Texture2D" uid="uid://vv4wfb3jmi57" path="res://assets/hero.png" id="2_hero"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
-atlas = ExtResource("1_3vyb7")
+[sub_resource type="AtlasTexture" id="idle_down"]
+atlas = ExtResource("2_hero")
+region = Rect2(0, 0, 353, 392)
+
+[sub_resource type="AtlasTexture" id="walk_down_1"]
+atlas = ExtResource("2_hero")
+region = Rect2(353, 0, 353, 392)
+
+[sub_resource type="AtlasTexture" id="walk_up_1"]
+atlas = ExtResource("2_hero")
+region = Rect2(706, 0, 353, 392)
+
+[sub_resource type="AtlasTexture" id="walk_up_2"]
+atlas = ExtResource("2_hero")
 region = Rect2(1059, 0, 353, 392)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
-atlas = ExtResource("1_3vyb7")
+[sub_resource type="AtlasTexture" id="walk_side_1"]
+atlas = ExtResource("2_hero")
+region = Rect2(0, 392, 353, 392)
+
+[sub_resource type="AtlasTexture" id="walk_side_2"]
+atlas = ExtResource("2_hero")
 region = Rect2(353, 392, 353, 392)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_46l1j"]
+[sub_resource type="AtlasTexture" id="walk_side_3"]
+atlas = ExtResource("2_hero")
+region = Rect2(706, 392, 353, 392)
+
+[sub_resource type="AtlasTexture" id="idle_up"]
+atlas = ExtResource("2_hero")
+region = Rect2(1059, 392, 353, 392)
+
+[sub_resource type="AtlasTexture" id="idle_side"]
+atlas = ExtResource("2_hero")
+region = Rect2(0, 784, 353, 392)
+
+[sub_resource type="SpriteFrames" id="frames"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g2els")
+"texture": SubResource("idle_down")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("idle_side")
+}],
+"loop": true,
+"name": &"idle_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("idle_up")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("idle_down")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qhqgy")
+"texture": SubResource("walk_down_1")
 }],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
+"loop": true,
+"name": &"walk_down",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("walk_side_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("walk_side_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("walk_side_3")
+}],
+"loop": true,
+"name": &"walk_side",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("walk_up_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("walk_up_2")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 8.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_46l1j"]
-radius = 110.00455
+[sub_resource type="CircleShape2D" id="body_shape"]
+radius = 18.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1218412079]
+[sub_resource type="CircleShape2D" id="hurt_shape"]
+radius = 22.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=545065450]
-sprite_frames = SubResource("SpriteFrames_46l1j")
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_player")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2133947214]
-position = Vector2(-42, -50)
-shape = SubResource("CircleShape2D_46l1j")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.16, 0.16)
+sprite_frames = SubResource("frames")
+animation = &"idle_down"
+autoplay = "idle_down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("body_shape")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 6)
+shape = SubResource("hurt_shape")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+zoom = Vector2(1.15, 1.15)
