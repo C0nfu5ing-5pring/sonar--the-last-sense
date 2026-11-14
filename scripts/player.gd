@@ -4,6 +4,27 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+var max_health = 100
+var health = 100
+var is_dead = false
+
+func take_damage(amount: int):
+	if is_dead:
+		return
+
+	health -= amount
+	health = max(health, 0)
+
+	print("Health:", health)
+
+	if health <= 0:
+		die()
+
+func die():
+	is_dead = true
+	print("Player died!")
+	get_tree().reload_current_scene()
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

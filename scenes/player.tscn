@@ -25,7 +25,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_46l1j"]
-radius = 110.00455
+radius = 40.012497
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1218412079]
 
@@ -33,5 +33,5 @@ radius = 110.00455
 sprite_frames = SubResource("SpriteFrames_46l1j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2133947214]
-position = Vector2(-42, -50)
+position = Vector2(-50, -50)
 shape = SubResource("CircleShape2D_46l1j")
